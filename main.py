@@ -19,11 +19,27 @@ class Users(db.Model):
 class Tasks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    title = db.Column(db.String(60), nullable=False)
-    description = db.Column(db.Text, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
     status = db.Column(db.Boolean, nullable=False, default=False)
 
 
+
+@app.route('/newtask', methods=['POST'])
+def newtask():
+    if request.method == 'POST':
+        title = request.json['text']
+        if 'user_id' in session:
+            user_id = session['user_id']
+        else:
+            return redirect('/')
+        try:
+            task = Tasks(title=title, user_id=user_id)
+            db.session.add(task)
+            db.session.commit()
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})
+    return jsonify({'success': False,'error': 'Ошибка доступа.'})
 @app.route("/")
 def index():
     try:
@@ -80,8 +96,12 @@ def unlogin():
 
 @app.route("/home")
 def home():
-    return render_template('home.html')
-
+    try:
+        tasks = Tasks.query.filter_by(user_id=session['user_id']).all()
+        return render_template('home.html', tasks=tasks)
+    except Exception as e:
+        print(e)
+        return ''
 
 @app.route('/reg', methods=['GET', 'POST'])
 def reg():
