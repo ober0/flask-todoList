@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Вход</h2>
+        <form method="post">
+            <span id="error"></span>
+            <div class="form-group">
+                <label for="username">Имя:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button id="reg" type="button">Войти</button>
+
+            <div style="text-align: center">
+                <p>Еще нет аккаунта? <b><a href="/login">Зарегистрироваться</a></b> </p>
+            </div>
+
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+</body>
+</html>
