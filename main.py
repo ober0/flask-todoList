@@ -135,8 +135,7 @@ def home():
         tasks = Tasks.query.filter_by(user_id=session['user_id']).all()
         return render_template('home.html', tasks=tasks)
     except Exception as e:
-        print(e)
-        return ''
+        return redirect('/')
 
 @app.route('/reg', methods=['GET', 'POST'])
 def reg():

@@ -12,7 +12,7 @@
       <input type="text" id="myInput" placeholder="Задача...">
       <span onclick="newElement()" class="addBtn">Добавить</span>
     </div>
-
+    <span id="error"></span>
     <ul id="myUL">
         {% for task in tasks %}
             {% if task.status == True %}
