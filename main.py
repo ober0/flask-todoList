@@ -23,7 +23,21 @@ class Tasks(db.Model):
     status = db.Column(db.Boolean, nullable=False, default=False)
 
 
+@app.route("/do", methods=["POST"])
+def do():
+    if request.method == "POST":
+        user_id = session['user_id']
+        task_id = request.json['taskId']
+        status = request.json['status']
 
+        task = Tasks.query.filter_by(id=task_id).filter_by(user_id=user_id).first()
+        if task:
+            task.status = status
+            db.session.commit()
+            return jsonify({'success': True, 'status': status})
+        else:
+            return jsonify({'success': False, 'message':'Задача не найдена. Тех-поддержка: ober1.st8@mail.ru'})
+    return jsonify({'success': False, 'message':'Ошибка доступа. Тех-поддержка: ober1.st8@mail.ru'})
 @app.route('/newtask', methods=['POST'])
 def newtask():
     if request.method == 'POST':

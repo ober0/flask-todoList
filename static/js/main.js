@@ -53,3 +53,50 @@ function newElement() {
 }
 
 
+
+
+const tasks = document.querySelectorAll('.task')
+tasks.forEach(function (task) {
+    task.addEventListener('click', function () {
+        let task_id = task.getAttribute('for')
+
+        let data;
+        if (task.getAttribute('status') == "True"){
+            data = {
+                taskId: task_id,
+                status: false
+            }
+        }
+        else {
+            data = {
+                taskId: task_id,
+                status: true
+            }
+        }
+
+        fetch('/do', {
+            method: 'post',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success){
+                    if (result.status){
+                        task.classList.add('checked')
+                        task.setAttribute('status', 'True')
+                    }
+                    else {
+                        task.classList.remove('checked')
+                        task.setAttribute('status', 'False')
+                    }
+
+                }
+                else {
+                    alert('Ошибка:' + result.message)
+                }
+            })
+    })
+})

@@ -16,10 +16,10 @@
     <ul id="myUL">
         {% for task in tasks %}
             {% if task.status == True %}
-                <li for="{{task.id}}" class="task checked">{{task.title}}<span for="{{task.id}}" class="close">×</span></li>
+                <li for="{{task.id}}" status="True" class="task checked">{{task.title}}<span for="{{task.id}}" class="close">×</span></li>
 
             {% else %}
-                <li for="{{task.id}}" class="task">{{task.title}}<span for="{{task.id}}" class="close">×</span></li>
+                <li for="{{task.id}}" status="False" class="task">{{task.title}}<span for="{{task.id}}" class="close">×</span></li>
             {% endif %}
         {% endfor %}
     </ul>
