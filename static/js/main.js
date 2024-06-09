@@ -100,3 +100,32 @@ tasks.forEach(function (task) {
             })
     })
 })
+
+const close = document.querySelectorAll('.close')
+close.forEach(function (span) {
+    span.addEventListener('click', function () {
+        let taskId = span.getAttribute('for')
+
+        fetch('/remTask', {
+            method: 'post',
+            headers: {
+                "Content-Type":'application/json'
+            },
+            body: JSON.stringify({taskId: taskId})
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    let parents = document.querySelectorAll('.task')
+                    parents.forEach(function (parent) {
+                        if (parent.getAttribute('for') == taskId) {
+                            parent.remove()
+                        }
+                    })
+                }
+                else {
+                    alert('Ошибка' + result.message)
+                }
+            })
+    })
+})
