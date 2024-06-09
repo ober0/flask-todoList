@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <a href="/unlogin">Выйти</a>
     <div id="myDIV" class="header">
       <h2>My To Do List</h2>
       <input type="text" id="myInput" placeholder="Title...">
@@ -15,16 +16,17 @@
     <ul id="myUL">
         {% for task in tasks %}
             {% if task.status == True %}
-                <li class="checked">{{task.title}}</li>
+                <li class="task checked">{{task.title}}<span for="{{task.id}}" class="close">×</span></li>
+
             {% else %}
-                <li>{{task.title}}</li>
+                <li class="task">{{task.title}}<span for="{{task.id}}" class="close">×</span></li>
             {% endif %}
         {% endfor %}
     </ul>
 
 
 
-    <a href="/unlogin">Выйти</a>
+
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
